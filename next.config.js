@@ -5,10 +5,8 @@ const nextConfig = {
   },
   images: { unoptimized: true },
   swcMinify: true,
-  output: 'standalone',
+  output: 'export', 
   experimental: {
-    // This will allow Next.js to attempt to use the wasm version of SWC
-    // if the native version fails to load
     fallbackNodePolyfills: false
   }
 };

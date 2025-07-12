@@ -1,17 +1,35 @@
-"use client";
+'use client';
 
 import Head from 'next/head';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Overview from '@/components/Overview';
 import Appointments from '@/components/Appointments';
 import Records from '@/components/Records';
 import Profile from '@/components/Profile';
+import { useAuth } from '@/lib/useAuth';
+import { auth } from '@/lib/firebase';
+import { signOut } from 'firebase/auth';
 
 export default function Dashboard() {
+  const { user, loading } = useAuth();
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState('overview');
   const [appointmentTab, setAppointmentTab] = useState('upcoming');
 
   const tabs = ['overview', 'appointments', 'records', 'profile'];
+
+  const handleBookAppointment = () => {
+    router.push('/book-appointment');
+  };
+
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push('/sign-in');
+    }
+  }, [user, loading]);
+
+  if (loading || !user) return null;
 
   return (
     <>
@@ -22,6 +40,7 @@ export default function Dashboard() {
           rel="stylesheet"
         />
       </Head>
+
       <div className="min-h-screen bg-gray-50">
         <header className="bg-white border-b border-gray-200">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -32,7 +51,7 @@ export default function Dashboard() {
                 </div>
                 <div>
                   <h1 className="text-xl font-bold text-gray-900">Dashboard</h1>
-                  <p className="text-sm text-gray-600">Welcome back, John!</p>
+                  <p className="text-sm text-gray-600">Welcome back, {user?.email || 'User'}!</p>
                 </div>
               </div>
               <div className="flex items-center space-x-4">
@@ -43,12 +62,14 @@ export default function Dashboard() {
                   alt="Profile"
                   className="w-10 h-10 rounded-full object-cover"
                 />
+                <button onClick={() => signOut(auth)} className="text-sm text-red-500 hover:underline">
+                  Log out
+                </button>
               </div>
             </div>
           </div>
         </header>
 
-        {/* Tabs */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="mb-6">
             <div className="flex space-x-1 bg-white p-1 rounded-lg shadow-sm">
@@ -62,22 +83,30 @@ export default function Dashboard() {
                   }`}
                   onClick={() => setActiveTab(tab)}
                 >
-                  <i className={`fas ${
-                    tab === 'overview' ? 'fa-user' :
-                    tab === 'appointments' ? 'fa-calendar-alt' :
-                    tab === 'records' ? 'fa-file-medical' :
-                    'fa-cog'
-                  }`}></i>
+                  <i
+                    className={`fas ${
+                      tab === 'overview'
+                        ? 'fa-user'
+                        : tab === 'appointments'
+                        ? 'fa-calendar-alt'
+                        : tab === 'records'
+                        ? 'fa-file-medical'
+                        : 'fa-cog'
+                    }`}
+                  ></i>
                   <span className="capitalize">{tab}</span>
                 </button>
               ))}
             </div>
           </div>
 
-          {/* Dynamic Tab Content */}
           {activeTab === 'overview' && <Overview />}
           {activeTab === 'appointments' && (
-            <Appointments activeSubTab={appointmentTab} onChangeTab={setAppointmentTab} />
+            <Appointments
+              activeSubTab={appointmentTab}
+              onChangeTab={setAppointmentTab}
+              onBookAppointment={handleBookAppointment}
+            />
           )}
           {activeTab === 'records' && <Records />}
           {activeTab === 'profile' && <Profile />}

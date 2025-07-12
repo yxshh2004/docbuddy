@@ -1,8 +1,8 @@
 export const metadata = {
-  title: "Login - Doctor Buddy",
+  title: "login - Doctor Buddy",
 };
 
-export default function LoginPage() {
+export default function loginPage() {
   return (
     <div className="bg-gray-100 min-h-screen">
       {/* Navbar */}
@@ -12,7 +12,7 @@ export default function LoginPage() {
         </div>
         <div className="space-x-6 text-lg">
           <a href="/login" className="hover:underline">
-            <i className="fas fa-sign-in-alt mr-1"></i>Login
+            <i className="fas fa-sign-in-alt mr-1"></i>login
           </a>
           <a href="/book-appointment" className="hover:underline">
             <i className="fas fa-calendar-plus mr-1"></i>Book

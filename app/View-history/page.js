@@ -1,15 +1,15 @@
 export const metadata = {
-  title: "View History - Doctor Buddy",
+  title: "view History - Doctor Buddy",
 };
 
-export default function ViewHistoryPage() {
+export default function viewHistoryPage() {
   return (
-    <div className="bg-gray-100 min-h-screen">
+    <div className="bg-gray-100 min-h-screen"> 
       {/* Navbar */}
       <nav className="bg-blue-600 p-4 text-white flex justify-between items-center shadow">
         <div className="text-xl font-bold">
           <i className="fas fa-stethoscope mr-2"></i>Doctor Buddy
-        </div>
+        </div> 
         <div className="space-x-6 text-lg">
           <a href="/login" className="hover:underline">
             <i className="fas fa-sign-in-alt mr-1"></i>Login

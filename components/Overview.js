@@ -1,5 +1,39 @@
 // components/Overview.js
+import { useState } from 'react';
+import Link from 'next/link';
+
 export default function Overview() {
+  const [appointments, setAppointments] = useState([
+    {
+      id: 1,
+      name: "Dr. Sarah Johnson",
+      specialty: "Cardiologist",
+      date: "2024-01-15",
+      time: "2:30 PM",
+      status: "confirmed",
+      icon: "fa-video"
+    },
+    {
+      id: 2,
+      name: "Dr. Michael Chen",
+      specialty: "Dermatologist",
+      date: "2024-01-18",
+      time: "10:00 AM",
+      status: "pending",
+      icon: "fa-comments"
+    }
+  ]);
+
+  const toggleStatus = (id) => {
+    setAppointments(prev =>
+      prev.map(app =>
+        app.id === id
+          ? { ...app, status: app.status === 'confirmed' ? 'pending' : 'confirmed' }
+          : app
+      )
+    );
+  };
+
   return (
     <div className="space-y-6">
       {/* Quick Stats */}
@@ -13,28 +47,16 @@ export default function Overview() {
       <div className="bg-white rounded-lg shadow-sm border">
         <div className="p-6 border-b border-gray-200 flex justify-between items-center">
           <h2 className="text-lg font-semibold text-gray-900">Upcoming Appointments</h2>
-          <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm">
-            <i className="fas fa-plus mr-2"></i> Book New
-          </button>
+          <Link href="/book-appointment">
+            <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm">
+              <i className="fas fa-plus mr-2"></i> Book New
+            </button>
+          </Link>
         </div>
         <div className="p-6 space-y-4">
-          {/* Appointment Cards */}
-          <AppointmentCard
-            name="Dr. Sarah Johnson"
-            specialty="Cardiologist"
-            date="2024-01-15"
-            time="2:30 PM"
-            status="confirmed"
-            icon="fa-video"
-          />
-          <AppointmentCard
-            name="Dr. Michael Chen"
-            specialty="Dermatologist"
-            date="2024-01-18"
-            time="10:00 AM"
-            status="pending"
-            icon="fa-comments"
-          />
+          {appointments.map((appt) => (
+            <AppointmentCard key={appt.id} {...appt} onToggle={() => toggleStatus(appt.id)} />
+          ))}
         </div>
       </div>
 
@@ -69,7 +91,7 @@ function Card({ title, value, description, icon }) {
   );
 }
 
-function AppointmentCard({ name, specialty, date, time, status, icon }) {
+function AppointmentCard({ name, specialty, date, time, status, icon, onToggle }) {
   return (
     <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:shadow transition">
       <div className="flex items-center space-x-4">
@@ -87,9 +109,12 @@ function AppointmentCard({ name, specialty, date, time, status, icon }) {
         <span className={`px-2 py-1 rounded text-xs font-medium ${
           status === 'confirmed' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
         }`}>{status}</span>
-        <button className="text-blue-600 hover:text-blue-800 p-2 border border-gray-300 rounded">
-          <i className={`fas ${icon}`}></i>
-        </button>
+        <input
+          type="checkbox"
+          checked={status === 'confirmed'}
+          onChange={onToggle}
+          className="form-checkbox h-5 w-5 text-green-600"
+        />
       </div>
     </div>
   );
@@ -113,3 +138,5 @@ function Record({ title, doctor, date }) {
     </div>
   );
 }
+
+

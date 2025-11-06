@@ -2,10 +2,9 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 
-// Import global font
+
 const inter = Inter({ subsets: ['latin'] });
 
-// SEO Metadata
 export const metadata: Metadata = {
   title: 'DoctorBuddy - Consult Doctors Online | Healthcare Platform',
   description:
@@ -14,7 +13,6 @@ export const metadata: Metadata = {
     'online doctor consultation, telemedicine, healthcare, medical advice, doctor appointment, virtual consultation',
 };
 
-// Root layout component
 export default function RootLayout({
   children,
 }: {
@@ -23,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Add FontAwesome (optional - only if not installed via npm) */}
+        {/* Font Awesome (optional) */}
         <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
@@ -31,8 +29,21 @@ export default function RootLayout({
           crossOrigin="anonymous"
           referrerPolicy="no-referrer"
         />
+        {/* Leaflet CSS for maps */}
+        <link
+          rel="stylesheet"
+          href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha512-XQoYMqMTK8LvdlxUMlPSOpF5N1V1DyStHMTM+Pni7sMLU13jwUVJrZOiSmMhz+2F1bQe7pIj7bR4CM4EcF+P1g=="
+          crossOrigin=""
+        />
       </head>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        
+        <main>{children}</main>
+      </body>
     </html>
   );
 }
+
+
+

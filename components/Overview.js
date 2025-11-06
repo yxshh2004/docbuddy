@@ -135,7 +135,7 @@ function Record({ title, doctor, date }) {
       <button className="text-gray-400 hover:text-gray-600">
         <i className="fas fa-download"></i>
       </button>
-    </div>
+    </div>  
   );
 }
 

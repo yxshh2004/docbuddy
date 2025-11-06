@@ -5,7 +5,7 @@ const nextConfig = {
   },
   images: { unoptimized: true },
   swcMinify: true,
-  output: 'export', 
+  // output: 'export', 
   experimental: {
     fallbackNodePolyfills: false
   }

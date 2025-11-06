@@ -129,12 +129,38 @@ export default function Home() {
   const [selectedSpecialty, setSelectedSpecialty] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [language, setLanguage] = useState('en');
+
 
   const filteredDoctors = topDoctors.filter(doctor => {
     const matchesSpecialty = selectedSpecialty === 'All' || doctor.specialty.includes(selectedSpecialty);
     const matchesSearch = doctor.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          doctor.specialty.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesSpecialty && matchesSearch;
+    return matchesSpecialty && matchesSearch; 
+
+  const translations = {
+  en: {
+    bookAppointment: "Book Appointment",
+    startConsultation: "Start Consultation Now",
+    welcome: "Your Health, Our Priority",
+    description:
+      "Connect with certified doctors through secure online consultations.",
+  },
+  hi: {
+    bookAppointment: "अपॉइंटमेंट बुक करें",
+    startConsultation: "अभी परामर्श शुरू करें",
+    welcome: "आपका स्वास्थ्य, हमारी प्राथमिकता",
+    description:
+      "प्रमाणित डॉक्टरों से सुरक्षित ऑनलाइन परामर्श के माध्यम से जुड़ें।",
+  },
+  mr: {
+    bookAppointment: "अपॉइंटमेंट बुक करा",
+    startConsultation: "आत्ता सल्ला सुरू करा",
+    welcome: "आपले आरोग्य, आमची जबाबदारी",
+    description:
+      "प्रमाणित डॉक्टरांशी सुरक्षित ऑनलाइन सल्ल्यासाठी संपर्क करा.",
+  },
+    };
   });
 
   return (
@@ -153,18 +179,32 @@ export default function Home() {
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-8">
               <a href="#home" className="text-gray-700 hover:text-blue-600 transition-colors">Home</a>
-              <a href="doctors" className="text-gray-700 hover:text-blue-600 transition-colors">Find Doctors</a>
+              <a href="for-doctors" className="text-gray-700 hover:text-blue-600 transition-colors">For Doctors</a>
               <a href="#features" className="text-gray-700 hover:text-blue-600 transition-colors">Features</a>
               <a href="about" className="text-gray-700 hover:text-blue-600 transition-colors">About</a>
+              {/* 🌐 Language Dropdown */}
+  <select
+    onChange={(e) => setLanguage(e.target.value)}
+    value={language}
+    className="text-sm border border-gray-300 rounded px-2 py-1"
+  >
+    <option value="en">🌐 English</option>
+    <option value="hi">🇮🇳 हिंदी</option>
+    <option value="mr">मराठी</option>
+  </select> 
+             
+
               <Link href="/sign-in">
               <Button variant="outline" className="border-blue-600 text-blue-600 hover:bg-blue-50">
                Sign In
                 </Button>
                 </Link>
+
               <Link href="/Log-out">
                <button className="text-sm text-red-600 hover:underline">Log out</button>
                </Link>
-            </div>
+            </div> 
+            
 
             {/* Mobile menu button */}
             <div className="md:hidden">
@@ -250,7 +290,7 @@ export default function Home() {
                 <div className="bg-white rounded-2xl shadow-2xl p-8 border border-gray-100">
                   <div className="text-center mb-6">
                     <h3 className="text-2xl font-bold text-gray-900 mb-2">Quick Consultation</h3>
-                    <p className="text-gray-600">Get medical advice in minutes</p>
+                    <p className="text-gray-600">Get Doctor advice in minutes</p>
                   </div>
                   
                   <div className="space-y-4">
@@ -264,11 +304,13 @@ export default function Home() {
                         <p className="text-sm font-medium text-green-900">Chat</p>
                       </div>
                     </div>
-                    
+
+                    <Link href="/start-consultation-now">
                     <Button className="w-full bg-blue-600 hover:bg-blue-700 py-3">
                       Start Consultation Now
                     </Button>
-                    
+                    </Link> 
+
                     <p className="text-xs text-gray-500 text-center">
                       Average wait time: <span className="font-medium text-green-600">2 minutes</span>
                     </p>

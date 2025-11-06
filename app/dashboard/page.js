@@ -7,6 +7,7 @@ import Overview from '@/components/Overview';
 import Appointments from '@/components/Appointments';
 import Records from '@/components/Records';
 import Profile from '@/components/Profile';
+import MedicineReminder from '@/components/MedicineReminder';
 import { useAuth } from '@/lib/useAuth';
 import { auth } from '@/lib/firebase';
 import { signOut } from 'firebase/auth';
@@ -26,6 +27,11 @@ export default function Dashboard() {
   useEffect(() => {
     if (!loading && !user) {
       router.push('/sign-in');
+    }
+
+    // ✅ Log UID to console
+    if (user) {
+      console.log("My UID:", user.uid);
     }
   }, [user, loading]);
 
@@ -51,18 +57,19 @@ export default function Dashboard() {
                 </div>
                 <div>
                   <h1 className="text-xl font-bold text-gray-900">Dashboard</h1>
-                  <p className="text-sm text-gray-600">Welcome back, {user?.email || 'User'}!</p>
+                  <p className="text-sm text-gray-600">
+                    Welcome back, {user?.email || 'User'}!
+                  </p>
                 </div>
               </div>
               <div className="flex items-center space-x-4">
                 <i className="fas fa-bell text-xl text-gray-500 hover:text-gray-700"></i>
                 <i className="fas fa-cog text-xl text-gray-500 hover:text-gray-700"></i>
-                <img
-                  src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=200&h=200&dpr=2"
-                  alt="Profile"
-                  className="w-10 h-10 rounded-full object-cover"
-                />
-                <button onClick={() => signOut(auth)} className="text-sm text-red-500 hover:underline">
+
+                <button
+                  onClick={() => signOut(auth)}
+                  className="text-sm text-red-500 hover:underline"
+                >
                   Log out
                 </button>
               </div>
@@ -100,7 +107,13 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {activeTab === 'overview' && <Overview />}
+          {activeTab === 'overview' && (
+            <>
+              <Overview />
+              <MedicineReminder />
+            </>
+          )}
+
           {activeTab === 'appointments' && (
             <Appointments
               activeSubTab={appointmentTab}
@@ -115,6 +128,7 @@ export default function Dashboard() {
     </>
   );
 }
+
 
 
 // You can define <Overview />, <Appointments />, <Records />, and <Profile /> as components in the same file or separate components under `components/` folder

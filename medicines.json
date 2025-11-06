@@ -1,0 +1,23 @@
+[
+  {
+    
+    "medicineName": "Paracetamol 500mg",
+    "doctorName": "Dr. Sarah Jadhav",
+    "time": "8:00 AM",
+    "disease": "Fever"
+  },
+  {
+    
+    "medicineName": "Azithromycin 250mg",
+    "doctorName": "Dr. sumeet dongre",
+    "time": "7:00 PM",
+    "disease": "Infection"
+  },
+  {
+    
+    "medicineName": "Vitamin C",
+    "doctorName": "Dr. yash walunjkar",
+    "time": "12:00 PM",
+    "disease": "Immunity Boost"
+  }
+]
